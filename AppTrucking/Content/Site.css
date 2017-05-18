@@ -1,0 +1,154 @@
+﻿
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse .navbar-nav.navbar-right:last-child {
+        margin-right: 0px;
+    }
+}
+.navbar-collapse{
+    background-color:#232331;
+    border-radius:0px;
+    font-size:14pt;
+    padding:0px;
+    margin:0px;
+}
+
+.navbar-collapse  .navbar-nav > a:hover{
+    background-color:black;
+}
+.navbar-collapse .navbar-nav > li > a {
+    color: #fff;
+}
+.navbar-collapse .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #737373;
+}
+
+.affix {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index:99999;
+  }
+.row{
+    margin:0px;
+}
+
+.block_footer{
+    height:401px;
+    background-color:#232331;
+    color:#fff;
+}
+
+.block_copy{
+    margin-top:95px;
+    height:50px;
+}
+
+.block_copy_left{
+    height:50px;
+    background:#ca1f26;
+    border-radius:0px 50px 0px 0px;
+}
+
+.block_copy_right{
+    font-size:12pt;
+    text-align:right;
+    padding-top:13px;
+}
+
+.footer_info, .footer_kontakt, .footer_about{
+    margin-top:50px;
+}
+.footer_info span,  .footer_kontakt span{
+    background:#ca1f26;
+    font-size:16pt;
+    padding:10px 30px 10px 10px;
+    border-radius:0px 50px 0px 0px;
+}
+.footer_about{
+    font-size:12pt;
+    color:#aaa;
+}
+.footer_ktk_adr{
+    padding-top:15px;
+}
+.footer_kontakt p{
+    font-size:12pt;
+    color:#aaa;
+}
+
+.footer_info ul{
+    padding-top:15px;
+    padding-left:10px;
+}
+.footer_info li{
+    list-style:none;
+    padding-bottom:8px;
+}
+.footer_info a{
+    color:#aaa;
+    font-size:12pt;
+}
+
+.nav_phone_top{
+    margin-top:40px;
+}
+.nav_phone_text{
+    font-size:14pt;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.img_logo{
+    height:100px;
+}
+
+.img_logo img{
+    margin-left:100px;
+    margin-top:2px;
+    height:95px;
+    width:250px;
+}
+
+.carousel-inner img{
+    height:421px;
+}
+
+.body_main{
+    background-color: #eee;
+}
+.profile_mainblock{
+    margin-top:40px;
+    margin-bottom:40px;
+}
+.profile_body{
+    margin-top:20px;
+}
+.registr_block{
+    margin-top:50px;
+    margin-bottom:100px;
+}
+.login_block{
+    margin-top:50px;
+    margin-bottom:100px;
+}

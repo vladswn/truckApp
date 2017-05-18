@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Hermes-trans</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row img_logo">
+            <div class="col-md-6">
+                <a href="#">
+                    <img src="http://www.sbtrack.in/files/2016/01/sbtracklogo1.png" alt="logo" />
+                </a>
+            </div>
+            <div class="col-md-3 nav_phone_top">
+                <span class="glyphicon glyphicon-earphone" aria-hidden="true"> <span class="nav_phone_text"> +(380)-666-272-221 </span> </span>
+            </div>
+            <div class="col-md-3 nav_phone_top">
+                <span class="glyphicon glyphicon-earphone" aria-hidden="true"><span class="nav_phone_text"> +(380)-986-112-321</span></span>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-collapse bg-primary" data-spy="affix" data-offset-top="100">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Головна сторінка", "Index", "Home")</li>
+            <li>@Html.ActionLink("Замовити перевезення", "Index", "Home")</li>
+            <li>@Html.ActionLink("Додаткові послуги", "Index", "Home")</li>
+            <li>@Html.ActionLink("Про нас", "Index", "Home")</li>
+            <li>@Html.ActionLink("Контакти", "Index", "Home")</li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>@Html.ActionLink("Ви: " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li>@Html.ActionLink("Вихід", "LogOff", "Account")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Реєстрація", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                <li>@Html.ActionLink("Вхід", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            }
+        </ul>
+    </nav>
+
+    <div class="container body-content body_main profile_mainblock">
+        <div class="row profile_body">
+            <div class="col-md-3 profile_menu">
+                <div class="list-group">
+                    @Html.ActionLink("Редагувати профайл", "Login", "Account", routeValues: null, htmlAttributes: new { @class="list-group-item"})
+                    @Html.ActionLink("Ваши замовлення", "MyOrders", "Manage", routeValues: null, htmlAttributes: new { @class = "list-group-item" })
+                    @Html.ActionLink("Переглянути статус замовлення", "Login", "Manage", routeValues: null, htmlAttributes: new { @class = "list-group-item" })
+                </div>
+            </div>
+            <div class="col-md-9 profile_body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <footer class="block_footer">
+        <div class="row">
+            <div class="col-md-4 footer_about">
+                <h3>Hermes-trans</h3>  В течении 10 лет работает на рынке международных перевозок товаров народного потребления в Украину. За эти годы Hermes-trans надежно закрепилась и заняла лидирующие позиции в данной сфере услуг.
+            </div>
+            <div class="col-md-4">
+                <div class="row footer_info">
+                    <div class="col-md-12">
+                        <span>Інформація</span>
+                        <ul>
+                            <li><a href="#">&raquo; Головна сторінка</a></li>
+                            <li><a href="#">&raquo; Замовити перевезення</a></li>
+                            <li><a href="#">&raquo; Додаткові послуги</a></li>
+                            <li><a href="#">&raquo; Про нас</a></li>
+                            <li><a href="#">&raquo; Контакти</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row footer_kontakt">
+                    <div class="col-md-12">
+                        <span>Контакти</span>
+                        <p class="footer_ktk_adr">
+                            Украина, Харьковская область, Харьков,ул. Ком. Уборевича, д. 28/64, оф. 205
+                        </p>
+                        <p>hermes_trans@gmail.com</p>
+                        <p>+(380)-666-272-221</p>
+                        <p>+(380)-986-112-321</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row block_copy">
+            <div class="col-md-6 block_copy_left">
+
+            </div>
+            <div class="col-md-6 block_copy_right">
+                &copy; @DateTime.Now.Year -  All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
