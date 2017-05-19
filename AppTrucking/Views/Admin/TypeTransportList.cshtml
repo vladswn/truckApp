@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AppTrucking.Models.TypeOfTransport>
+
+@{
+    ViewBag.Title = "Список користувачив";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "AddTypeTransport")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTypeTransport", new { id=item.TypeOfTransportId }) |
+            @Html.ActionLink("Delete", "DeleteTypeTransport", new { id=item.TypeOfTransportId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -237,7 +237,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Driver.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -326,6 +325,22 @@
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\DriverList.cshtml" />
+    <Content Include="Views\Admin\EditDriver.cshtml" />
+    <Content Include="Views\Admin\DeleteDriver.cshtml" />
+    <Content Include="Views\Admin\TypeTransportList.cshtml" />
+    <Content Include="Views\Admin\AddTypeTransport.cshtml" />
+    <Content Include="Views\Admin\EditTypeTransport.cshtml" />
+    <Content Include="Views\Admin\DeleteTypeTransport.cshtml" />
+    <Content Include="Views\Admin\CarList.cshtml" />
+    <Content Include="Views\Admin\AddCar.cshtml" />
+    <Content Include="Views\Admin\AddDriver.cshtml" />
+    <Content Include="Views\Admin\EditCar.cshtml" />
+    <Content Include="Views\Admin\DeleteCar.cshtml" />
+    <Content Include="Views\Admin\ServiceList.cshtml" />
+    <Content Include="Views\Admin\AddService.cshtml" />
+    <Content Include="Views\Admin\EditService.cshtml" />
+    <Content Include="Views\Admin\DeleteService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

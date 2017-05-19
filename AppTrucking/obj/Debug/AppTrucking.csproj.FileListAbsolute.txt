@@ -267,3 +267,5 @@ E:\truckApp\AppTrucking\obj\Debug\AppTrucking.dll
 E:\truckApp\AppTrucking\obj\Debug\AppTrucking.pdb
 E:\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Driver.resources
 E:\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Cascadedelete.resources
+D:\AppTrucking\AppTrucking\obj\Debug\AppTrucking.Migrations.Driver.resources
+D:\AppTrucking\AppTrucking\obj\Debug\AppTrucking.Migrations.Cascadedelete.resources

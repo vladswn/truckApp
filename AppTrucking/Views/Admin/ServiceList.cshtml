@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AppTrucking.Models.Service>
+
+@{
+    ViewBag.Title = "Список користувачив";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "AddService")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditService", new { id=item.ServiceId }) |
+            @Html.ActionLink("Delete", "DeleteService", new { id=item.ServiceId })
+        </td>
+    </tr>
+}
+
+</table>

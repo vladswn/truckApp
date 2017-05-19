@@ -41,6 +41,11 @@ namespace AppTrucking.Models
         public string UserId { get; set; }
 
 
+        public string DriverSurName { get; set; }
+        public string DriverName { get; set; }
+        public string DriverFullName { get { return String.Format($"{DriverName} {DriverSurName}"); } }
+        public string DriverPhone { get; set; }
+
         public Order Order { get; set; }
         public List<Service> Services { get; set; }
     }

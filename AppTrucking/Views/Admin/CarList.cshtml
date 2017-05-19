@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AppTrucking.Models.Car>
+
+@{
+    ViewBag.Title = "Список користувачив";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "AddCar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LiftingCapacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BodyVolume)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tonnage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prce)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfTransportId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LiftingCapacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BodyVolume)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tonnage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prce)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfTransport.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCar", new { id=item.CarId }) |
+            @Html.ActionLink("Delete", "DeleteCar", new { id=item.CarId })
+        </td>
+    </tr>
+}
+
+</table>

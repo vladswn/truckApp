@@ -251,6 +251,7 @@ namespace AppTrucking.Controllers
             return View();
         }
 
+        #region Driver
         public ActionResult DriverList()
         {
             var list = context.Drivers.ToList();
@@ -259,12 +260,14 @@ namespace AppTrucking.Controllers
         [HttpGet]
         public ActionResult AddDriver()
         {
+            ViewBag.CarId = new SelectList(context.Cars, "CarId", "Title");
             return View();
         }
         [HttpPost]
         public ActionResult AddDriver(Driver driver)
         {
             context.Drivers.Add(driver);
+            ViewBag.CarId = new SelectList(context.Cars, "CarId", "Title", driver.CarId);
             context.SaveChanges();
             return RedirectToAction("DriverList");
         }
@@ -272,6 +275,7 @@ namespace AppTrucking.Controllers
         public ActionResult EditDriver(int id)
         {
             var driver = context.Drivers.Find(id);
+            ViewBag.CarId = new SelectList(context.Cars, "CarId", "Title", driver.CarId);
             return View(driver);
         }
         [HttpPost]
@@ -287,30 +291,203 @@ namespace AppTrucking.Controllers
             return View(driver);
         }
 
-        //[HttpPost, ActionName("DeleteDriver")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteDriverConfirmed(int id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var driver = context.Drivers.Find(id);
-        //        if (id == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //        var user = await UserManager.FindByIdAsync(id);
+        [HttpPost, ActionName("DeleteDriver")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteDriverConfirmed(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var driver = context.Drivers.Find(id);
+                if (driver == null)
+                {
+                    return HttpNotFound();
+                }
 
-        //        var delete = await UserManager.DeleteAsync(user);
+                context.Drivers.Remove(driver);
+                context.SaveChanges();
 
-        //        if (!delete.Succeeded)
-        //        {
-        //            ModelState.AddModelError("", delete.Errors.First());
-        //            return View();
-        //        }
-        //        return RedirectToAction("UsersList");
-        //    }
-        //    return View();
-        //}
+                return RedirectToAction("DriverList");
+            }
+            return View();
+        }
+        #endregion
+
+        #region car
+        public ActionResult CarList()
+        {
+            var list = context.Cars.ToList();
+            return View(list);
+        }
+        [HttpGet]
+        public ActionResult AddCar()
+        {
+            ViewBag.TypeOfTransportId = new SelectList(context.TypeOfTransports, "TypeOfTransportId", "Title");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddCar(Car car)
+        {
+            context.Cars.Add(car);
+            context.SaveChanges();
+            return RedirectToAction("CarList");
+        }
+        [HttpGet]
+        public ActionResult EditCar(int id)
+        {
+            var car = context.Cars.Find(id);
+            ViewBag.TypeOfTransportId = new SelectList(context.TypeOfTransports, "TypeOfTransportId", "Title", car.TypeOfTransportId);
+            return View(car);
+        }
+        [HttpPost]
+        public ActionResult EditCar(Car car)
+        {
+            context.Entry(car).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("CarList");
+        }
+        public ActionResult DeleteCar(int id)
+        {
+            var car = context.Cars.Find(id);
+            return View(car);
+        }
+
+        [HttpPost, ActionName("DeleteCar")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCarConfirmed(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var car = context.Cars.Find(id);
+                if (car == null)
+                {
+                    return HttpNotFound();
+                }
+
+                context.Cars.Remove(car);
+                context.SaveChanges();
+
+                return RedirectToAction("CarList");
+            }
+            return View();
+        }
+        #endregion
+
+        #region type of transport
+        public ActionResult TypeTransportList()
+        {
+            var list = context.TypeOfTransports.ToList();
+            return View(list);
+        }
+        [HttpGet]
+        public ActionResult AddTypeTransport()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddTypeTransport(TypeOfTransport transport)
+        {
+            context.TypeOfTransports.Add(transport);
+            context.SaveChanges();
+            return RedirectToAction("TypeTransportList");
+        }
+        [HttpGet]
+        public ActionResult EditTypeTransport(int id)
+        {
+            var transport = context.TypeOfTransports.Find(id);
+            return View(transport);
+        }
+        [HttpPost]
+        public ActionResult EditTypeTransport(TypeOfTransport transport)
+        {
+            context.Entry(transport).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("TypeTransportList");
+        }
+        public ActionResult DeleteTypeTransport(int id)
+        {
+            var transport = context.TypeOfTransports.Find(id);
+            return View(transport);
+        }
+
+        [HttpPost, ActionName("DeleteTypeTransport")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTypeTransportConfirmed(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var transport = context.TypeOfTransports.Find(id);
+                if (transport == null)
+                {
+                    return HttpNotFound();
+                }
+
+                context.TypeOfTransports.Remove(transport);
+                context.SaveChanges();
+
+                return RedirectToAction("TypeTransportList");
+            }
+            return View();
+        }
+        #endregion
+
+        #region services
+        public ActionResult ServiceList()
+        {
+            var list = context.Services.ToList();
+            return View(list);
+        }
+        [HttpGet]
+        public ActionResult AddService()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddService(Service service)
+        {
+            context.Services.Add(service);
+            context.SaveChanges();
+            return RedirectToAction("ServiceList");
+        }
+        [HttpGet]
+        public ActionResult EditService(int id)
+        {
+            var service = context.Services.Find(id);
+            return View(service);
+        }
+        [HttpPost]
+        public ActionResult EditService(Service service)
+        {
+            context.Entry(service).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("ServiceList");
+        }
+        public ActionResult DeleteService(int id)
+        {
+            var service = context.Services.Find(id);
+            return View(service);
+        }
+
+        [HttpPost, ActionName("DeleteService")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteServiceConfirmed(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var service = context.Services.Find(id);
+                if (service == null)
+                {
+                    return HttpNotFound();
+                }
+
+                context.Services.Remove(service);
+                context.SaveChanges();
+
+                return RedirectToAction("ServiceList");
+            }
+            return View();
+        }
+        #endregion
+
 
     }
 }

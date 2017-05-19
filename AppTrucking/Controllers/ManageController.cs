@@ -333,6 +333,7 @@ namespace AppTrucking.Controllers
                           join mp in context.MapDatas on or.OrderId equals mp.OrderId
                           join us in context.Users on or.ApplicationUserId equals us.Id
                           join cr in context.Cars on or.CarId equals cr.CarId
+                          join dr in context.Drivers on or.CarId equals dr.CarId
                           //where (us.Id == Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity))
                           where(getUserId == us.Id)
                           select new OrderViewModels()
@@ -360,6 +361,9 @@ namespace AppTrucking.Controllers
                               Total = or.Total,
                               Viber = us.Viber,
                               UserId = us.Id,
+                              DriverName = dr.Name,
+                              DriverSurName = dr.Surname,
+                              DriverPhone = dr.Telephone,
                               Services = or.Services.ToList()
                               #endregion
                           }).ToList();

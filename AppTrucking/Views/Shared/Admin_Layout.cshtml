@@ -25,9 +25,12 @@
     <div class="row" style="margin-top:70px;margin-right:70px;margin-left:10px;">
         <div class="col-md-2 well" style="min-height:890px;">
             <div class="list-group">
-                @Html.ActionLink("Користувачи","","", null,new { @class= "list-group-item" })
-                @Html.ActionLink("Action", "", "", null, new { @class = "list-group-item" })
-                @Html.ActionLink("Action", "", "", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Користувачи","UsersList","Admin", null,new { @class= "list-group-item" })
+                @Html.ActionLink("Drivers", "DriverList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Type of transport", "TypeTransportList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Car", "CarList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Service List", "ServiceList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Drivers", "DriverList", "Admin", null, new { @class = "list-group-item" })
             </div>
         </div>
         <div class="col-md-offset-1 col-md-9 well">
