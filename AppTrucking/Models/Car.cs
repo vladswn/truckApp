@@ -30,6 +30,6 @@ namespace AppTrucking.Models
 
         public virtual ICollection<Order> Orders { get; set; }
         public virtual TypeOfTransport TypeOfTransport { get; set; }
-        //public virtual ICollection<Driver> Drivers { get; set; }
+        public virtual ICollection<Driver> Drivers { get; set; }
     }
 }

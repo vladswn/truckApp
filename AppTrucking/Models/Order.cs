@@ -45,6 +45,7 @@ namespace AppTrucking.Models
 
         //public virtual City City { get; set; }
         public virtual Car Car { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual ICollection<Service> Services { get; set; }
         public virtual ICollection<MapData> MapDatas { get; set; }

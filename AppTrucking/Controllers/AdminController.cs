@@ -18,7 +18,7 @@ namespace AppTrucking.Controllers
             UserManager = userManager;
             RoleManager = roleManager;
         }
-
+        ApplicationDbContext context = new ApplicationDbContext();
 
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
@@ -46,10 +46,16 @@ namespace AppTrucking.Controllers
             }
         }
 
+        // GET: Admin
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public async Task<ActionResult> UsersList()
         {
             var list = await UserManager.Users.ToListAsync();
-
+            
             return View(list);
         }
 
@@ -245,10 +251,66 @@ namespace AppTrucking.Controllers
             return View();
         }
 
-        // GET: Admin
-        public ActionResult Index()
+        public ActionResult DriverList()
+        {
+            var list = context.Drivers.ToList();
+            return View(list);
+        }
+        [HttpGet]
+        public ActionResult AddDriver()
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult AddDriver(Driver driver)
+        {
+            context.Drivers.Add(driver);
+            context.SaveChanges();
+            return RedirectToAction("DriverList");
+        }
+        [HttpGet]
+        public ActionResult EditDriver(int id)
+        {
+            var driver = context.Drivers.Find(id);
+            return View(driver);
+        }
+        [HttpPost]
+        public ActionResult EditDriver(Driver driver)
+        {
+            context.Entry(driver).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("DriverList");
+        }
+        public ActionResult DeleteDriver(int id)
+        {
+            var driver = context.Drivers.Find(id);
+            return View(driver);
+        }
+
+        //[HttpPost, ActionName("DeleteDriver")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteDriverConfirmed(int id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var driver = context.Drivers.Find(id);
+        //        if (id == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        var user = await UserManager.FindByIdAsync(id);
+
+        //        var delete = await UserManager.DeleteAsync(user);
+
+        //        if (!delete.Succeeded)
+        //        {
+        //            ModelState.AddModelError("", delete.Errors.First());
+        //            return View();
+        //        }
+        //        return RedirectToAction("UsersList");
+        //    }
+        //    return View();
+        //}
+
     }
 }

@@ -60,12 +60,32 @@ namespace AppTrucking.Models
         public DbSet<TypeOfTransport> TypeOfTransports { get; set; }
         public DbSet<MapData> MapDatas { get; set; }
         public DbSet<Order> Orders { get; set; }
-        //public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
         static ApplicationDbContext()
         {
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
         }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Order>()
+        //.HasOptional(a => a.ApplicationUser)
+        //.WithOptionalDependent()
+        //.WillCascadeOnDelete(true);
+        //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany(e => e.Orders)
+            //    .WithOptional(s => s.ApplicationUser)
+            //    .HasForeignKey(e => e.OrderId)
+            //    .WillCascadeOnDelete(true);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(s => s.Orders)
+                .WithRequired(s => s.ApplicationUser)
+                .WillCascadeOnDelete(true);
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
