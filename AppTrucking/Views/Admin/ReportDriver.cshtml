@@ -1,0 +1,30 @@
+﻿@*@model AppTrucking.Models.Driver*@
+@model AppTrucking.Models.ReportViewModel
+@{ 
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+    //var from = (DateTime)ViewBag.fromDate;
+    //var to = (DateTime)ViewBag.toDate;
+}
+
+
+@using (Html.BeginForm("ReportDriver", "Admin", FormMethod.Get))
+{
+    <div>
+        З: @Html.TextBox("fromDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield", type = "date" })
+        До: @Html.TextBox("toDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield", type = "date" })
+        @Html.DropDownList("DriverId", ViewBag.DriverId as SelectList, new { @class = "form-control" })
+        @*@Html.DropDownList("DriverId", null, new { @class = "form-control" })*@
+        <input type="submit" value="Search" />
+    </div>
+
+    <div>
+        @*@Model.FullName
+        @Model.Total*@
+        @if (Model != null)
+        {
+            <span>Водій</span> @Model.FullName
+            <br />
+            <span>Усього</span> @Model.Sum
+        }
+    </div>
+}

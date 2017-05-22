@@ -17,13 +17,16 @@ namespace AppTrucking.Models
         public decimal Total { get; set; }
         public bool Status { get; set; }
         public string Description { get; set; }
+        public int Weight { get; set; }
+        public int Volume { get; set; }
+        public bool IsSent { get; set; }
 
         public string Title { get; set; }
         public string LiftingCapacity { get; set; }
         public int BodyVolume { get; set; }
         public double Tonnage { get; set; }
         public Decimal Prce { get; set; }
-
+        public string CarNumber { get; set; }
 
         public string From { get; set; }
         public string To { get; set; }

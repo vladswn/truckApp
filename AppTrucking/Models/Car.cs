@@ -27,6 +27,8 @@ namespace AppTrucking.Models
         public Decimal Prce { get; set; }
         [Display(Name = "Тип транспорту")]
         public int TypeOfTransportId { get; set; }
+        public Boolean IsFree { get; set; } = true;
+        public string Number { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
         public virtual TypeOfTransport TypeOfTransport { get; set; }

@@ -49,7 +49,113 @@ namespace AppTrucking.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            List<OrderViewModels> orders;
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                orders = (from or in context.Orders
+                          join mp in context.MapDatas on or.OrderId equals mp.OrderId
+                          join us in context.Users on or.ApplicationUserId equals us.Id
+                          join cr in context.Cars on or.CarId equals cr.CarId
+                          join dr in context.Drivers on or.CarId equals dr.CarId
+                          //where (us.Id == Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity))
+                          select new OrderViewModels()
+                          {
+                              #region Feilds
+                              OrderId = or.OrderId,
+                              BodyVolume = cr.BodyVolume,
+                              CompanyName = us.CompanyName,
+                              Description = or.Description,
+                              Distance = mp.Distance,
+                              Duration = mp.Duration,
+                              E_mail = us.Email,
+                              From = mp.From,
+                              LiftingCapacity = cr.LiftingCapacity,
+                              Name = us.Name,
+                              OrderTime = or.OrderTime,
+                              Prce = cr.Prce,
+                              Skype = us.Skype,
+                              Status = or.Status,
+                              Surname = us.Surname,
+                              Telephone = us.Telephone,
+                              Title = cr.Title,
+                              To = mp.To,
+                              Tonnage = cr.Tonnage,
+                              Total = or.Total,
+                              Viber = us.Viber,
+                              UserId = us.Id,
+                              DriverName = dr.Name,
+                              DriverSurName = dr.Surname,
+                              DriverPhone = dr.Telephone,
+                              Volume = or.Volume,
+                              Weight = or.Weight,
+                              CarNumber = cr.Number,
+                              IsSent = or.IsSent,
+                              Services = or.Services.ToList()
+                              #endregion
+                          }).OrderByDescending(s=> s.OrderId).ToList();
+
+                return View(orders);
+                }
+        }
+
+        public ActionResult EditStatus(int id)
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem
+            {
+                Text = "В дорозі",
+                Value = false.ToString()
+            });
+            status.Add(new SelectListItem
+            {
+                Text = "Прибув",
+                Value = true.ToString()
+            });
+
+            var edit = context.Orders.Find(id);
+            if(edit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Status = status;
+            return View(edit);
+        }
+        [HttpPost]
+        public ActionResult EditStatus(Order order)
+        {
+            context.Entry(order).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EditSent(int id)
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem
+            {
+                Text = "Не відправлен",
+                Value = false.ToString()
+            });
+            status.Add(new SelectListItem
+            {
+                Text = "Відправлен",
+                Value = true.ToString()
+            });
+
+            var edit = context.Orders.Find(id);
+            if (edit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.IsSent = status;
+            return View(edit);
+        }
+        [HttpPost]
+        public ActionResult EditSent(Order order)
+        {
+            context.Entry(order).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> UsersList()
@@ -251,6 +357,85 @@ namespace AppTrucking.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ReportDriver(DateTime? fromDate, DateTime? toDate, int? DriverId)
+        {
+            //var lst = new ReportViewModel()
+            //{
+            //    Drivers = new SelectList(context.Drivers,)
+            //}
+            //ViewBag.DriverId =  new SelectList(context.Drivers, "DriverId", "Name"+" "+"Surname");
+            var list = context.Drivers.ToList();
+            List<SelectListItem> listData = new List<SelectListItem>();
+            listData.Add(new SelectListItem
+            {
+                Text = "Please select",
+                Value = "",
+            });
+
+            foreach (var item in list)
+            {
+                listData.Add(new SelectListItem
+                {
+                    Text = string.Format($"{item.Name} {item.Surname}"),
+                    Value = item.DriverId.ToString()
+                });
+            }
+            ViewBag.DriverId = listData;
+            if(fromDate != null && toDate != null && DriverId != null)
+            {
+                //var ord = (from s in context.Orders
+                //           join cr in context.Cars on s.CarId equals cr.CarId
+                //           join dr in context.Drivers on cr.CarId equals dr.CarId
+                //           where dr.DriverId == DriverId
+                //           && s.OrderTime >= fromDate && s.OrderTime < toDate
+                //           select new ReportViewModel()
+                //           {
+                //               CarName = cr.Title,
+                //               Name = dr.Name,
+                //               Surname = dr.Surname,
+                //               Total = s.Total
+                //           }).ToList();
+                Decimal ord = (from s in context.Orders
+                           join cr in context.Cars on s.CarId equals cr.CarId
+                           join dr in context.Drivers on cr.CarId equals dr.CarId
+                           where dr.DriverId == DriverId
+                           && s.OrderTime >= fromDate && s.OrderTime < toDate
+                           select s).Sum(s => s.Total);
+
+
+                //ReportViewModel report = new ReportViewModel();
+                //report = new ReportViewModel()
+                //{
+                //    CarName = ord.FirstOrDefault().CarName,
+                //    Name = ord.FirstOrDefault().Name,
+                //    Surname = ord.FirstOrDefault().Surname,
+                //};
+                ReportViewModel report;
+                report = (from s in context.Orders
+                          join cr in context.Cars on s.CarId equals cr.CarId
+                          join dr in context.Drivers on cr.CarId equals dr.CarId
+                          select new ReportViewModel()
+                          {
+                              CarName = cr.Title,
+                              Name = dr.Name,
+                              Surname = dr.Surname,
+                              Sum = ord
+                          }).FirstOrDefault();
+
+                //if (!from.HasValue) from = DateTime.Now.Date;
+                //if (!to.HasValue) to = from.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
+                //if (to < from) to = from.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
+                //ViewBag.fromDate = from;
+                //ViewBag.toDate = to;
+
+                return View(report);
+            }
+            else
+                return View();
+        }
+
+
         #region Driver
         public ActionResult DriverList()
         {
@@ -313,10 +498,17 @@ namespace AppTrucking.Controllers
         #endregion
 
         #region car
-        public ActionResult CarList()
+        public ActionResult CarList(string searchCar)
         {
-            var list = context.Cars.ToList();
-            return View(list);
+            //var list = context.Cars;
+            var list = from s in context.Cars
+                       select s;
+            if (!String.IsNullOrEmpty(searchCar))
+            {
+                list = list.Where(s => s.Title.Contains(searchCar));
+            }
+            
+            return View(list.ToList());
         }
         [HttpGet]
         public ActionResult AddCar()
@@ -369,6 +561,35 @@ namespace AppTrucking.Controllers
                 return RedirectToAction("CarList");
             }
             return View();
+        }
+        public ActionResult EditCarStatus(int id)
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem
+            {
+                Text = "Зайнята",
+                Value = false.ToString()
+            });
+            status.Add(new SelectListItem
+            {
+                Text = "Вільна",
+                Value = true.ToString()
+            });
+
+            var edit = context.Cars.Find(id);
+            if (edit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.IsFree = status;
+            return View(edit);
+        }
+        [HttpPost]
+        public ActionResult EditCarStatus(Car car)
+        {
+            context.Entry(car).State = EntityState.Modified;
+            context.SaveChanges();
+            return RedirectToAction("CarList");
         }
         #endregion
 

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AppTrucking.Models;
+using System.Net.Mail;
 
 namespace AppTrucking.Controllers
 {
@@ -228,9 +229,12 @@ namespace AppTrucking.Controllers
 
                 var callbackUrl = Url.Action("ResetPassword", "Account",
                     new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Сброс пароля",
-                    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
 
+                //await UserManager.SendEmailAsync(user.Id, "Сброс пароля",
+                //    "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
+
+                SendEmail(model.Email, "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>",
+                   user.Id, "Сброс пароля");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -243,6 +247,25 @@ namespace AppTrucking.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+        public void SendEmail(string from,string body, string UsierID, string Subject)
+        {
+            string name = "slepsys@yandex.ru";
+            string password = "usercu26afm";
+            MailMessage mail = new MailMessage(name, from);
+            using (SmtpClient smtp = new SmtpClient())
+            {
+                smtp.Host = "smtp.yandex.ru";
+                smtp.Port = 587;
+                smtp.Credentials = new System.Net.NetworkCredential(name, password);
+                smtp.EnableSsl = true;
+                mail.Subject = String.Format("Email :{0}, Name {1}", from);
+                mail.Body = body;
+                smtp.Send(mail);
+            }
+
         }
 
         //

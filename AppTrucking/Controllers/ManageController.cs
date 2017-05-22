@@ -364,6 +364,9 @@ namespace AppTrucking.Controllers
                               DriverName = dr.Name,
                               DriverSurName = dr.Surname,
                               DriverPhone = dr.Telephone,
+                              Volume = or.Volume,
+                              Weight = or.Weight,
+                              CarNumber = cr.Number,
                               Services = or.Services.ToList()
                               #endregion
                           }).ToList();

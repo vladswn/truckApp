@@ -21,29 +21,12 @@ namespace AppTrucking.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public string ApplicationUserId { get; set; }
-
-        //#region UserInfo
-        //[Required(ErrorMessage = "Обов'язкове для заповнення")]
-        //[Display(Name = "Назва компанії")]
-        //public string CompanyName { get; set; }
-        //[Required(ErrorMessage = "Обов'язкове для заповнення")]
-        //[Display(Name = "Контактна особа")]
-        //public string ContactPerson { get; set; }
-        //[Required(ErrorMessage = "Обов'язкове для заповнення")]
-        //[Display(Name = "Електронна адреса")]
-        //[DataType(DataType.EmailAddress, ErrorMessage ="Некоректна електронна адреса")]
-        //public string E_mail { get; set; }
-        //[Display(Name = "Skype")]
-        //[StringLength(15, MinimumLength = 3, ErrorMessage = "Довжина повинна бути від 3 до 15 символів!")]
-        //public string Skype { get; set; }
-        //[Display(Name = "Viber")]
-        //public string Viber { get; set; }
-        //[Required(ErrorMessage = "Обов'язкове для заповнення")]
-        //[Display(Name = "Телефон")]
-        //public string Telephone { get; set; }
-        //#endregion
-
-        //public virtual City City { get; set; }
+        [Display(Name = "Вага")]
+        public int Weight { get; set; }
+        [Display(Name = "Об'єм")]
+        public int Volume { get; set; }
+        public bool IsSent { get; set; } = false;
+        
         public virtual Car Car { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }

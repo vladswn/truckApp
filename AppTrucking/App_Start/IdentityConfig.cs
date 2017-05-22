@@ -27,7 +27,7 @@ namespace AppTrucking
             var pass = "usercu26afm";
 
             // адрес и порт smtp-сервера, с которого мы и будем отправлять письмо
-            SmtpClient client = new SmtpClient("smtp.yandex.ru", 25);
+            SmtpClient client = new SmtpClient("smtp.yandex.ru", 587);
 
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;

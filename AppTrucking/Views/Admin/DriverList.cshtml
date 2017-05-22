@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "AddDriver")
+    @Html.ActionLink("Додати водія", "AddDriver")
 </p>
 <table class="table">
     <tr>
@@ -26,7 +26,7 @@
             @Html.DisplayNameFor(model => model.Telephone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CarId)
+            @Html.DisplayNameFor(model => model.Car.Title)
         </th>
         <th></th>
     </tr>
@@ -52,8 +52,8 @@
             @Html.DisplayFor(modelItem => item.Car.Title)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditDriver", new { id=item.DriverId }) |
-            @Html.ActionLink("Delete", "DeleteDriver", new { id=item.DriverId })
+            @Html.ActionLink("Редагувати", "EditDriver", new { id=item.DriverId }) |
+            @Html.ActionLink("Видалити", "DeleteDriver", new { id=item.DriverId })
         </td>
     </tr>
 }

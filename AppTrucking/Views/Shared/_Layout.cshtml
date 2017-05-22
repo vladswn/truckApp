@@ -47,7 +47,7 @@
     <nav class="navbar navbar-collapse bg-primary" data-spy="affix" data-offset-top="100">
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Головна сторінка", "Index", "Home")</li>
-            <li>@Html.ActionLink("Замовити перевезення", "Index", "Home")</li>
+            <li>@Html.ActionLink("Замовити перевезення", "Order", "Home")</li>
             <li>@Html.ActionLink("Додаткові послуги", "Index", "Home")</li>
             <li>@Html.ActionLink("Про нас", "Index", "Home")</li>
             <li>@Html.ActionLink("Контакти", "Index", "Home")</li>
@@ -56,6 +56,10 @@
         <ul class="nav navbar-nav navbar-right">
             @if (User.Identity.IsAuthenticated)
             {
+                if (User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Панель управління", "Index", "Admin")</li>
+                }
             <li>@Html.ActionLink("Ви: " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
             <li>@Html.ActionLink("Вихід", "LogOff", "Account")</li>
             }
@@ -108,7 +112,7 @@
     <footer class="block_footer">
         <div class="row">
             <div class="col-md-4 footer_about">
-                <h3>Hermes-trans</h3>  В течении 10 лет работает на рынке международных перевозок товаров народного потребления в Украину. За эти годы Hermes-trans надежно закрепилась и заняла лидирующие позиции в данной сфере услуг.
+                <h3>Hermes-trans</h3>  Протягом 10 років працює на ринку міжнародних перевезень товарів народного споживання в Україні. За ці роки Hermes-trans надійно закріпилася і зайняла лідируючі позиції в цій сфері послуг.
             </div>
             <div class="col-md-4">
                 <div class="row footer_info">
@@ -116,7 +120,7 @@
                         <span>Інформація</span>
                         <ul>
                             <li><a href="#">&raquo; Головна сторінка</a></li>
-                            <li><a href="#">&raquo; Замовити перевезення</a></li>
+                            <li><a href="/Home/Order">&raquo; Замовити перевезення</a></li>
                             <li><a href="#">&raquo; Додаткові послуги</a></li>
                             <li><a href="#">&raquo; Про нас</a></li>
                             <li><a href="#">&raquo; Контакти</a></li>
@@ -132,7 +136,7 @@
                     <div class="col-md-12">
                         <span>Контакти</span>
                         <p class="footer_ktk_adr">
-                            Украина, Харьковская область, Харьков,ул. Ком. Уборевича, д. 28/64, оф. 205
+                            Україна, Харківьска область, Харків, вул. Ком. Уборевича, б. 28/64, оф. 205
                         </p>
                         <p>hermes_trans@gmail.com</p>
                         <p>+(380)-666-272-221</p>

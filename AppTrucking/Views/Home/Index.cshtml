@@ -1,106 +1,44 @@
-﻿@{
+﻿@model IEnumerable<AppTrucking.Models.OrderViewModels>
+
+@{
     ViewBag.Title = "Головна стоінка";
 }
 
-
 <br />
-1
+<h2 class="text-center">Останні замовлення</h2>
 <br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
-<br />
-1
+@foreach(var item in Model)
+{
+    <div class="table-responsive" >
+        <table class="table table-bordered text-center"  style="-webkit-box-shadow: 0px 0px 5px 0px rgba(143,143,143,1);
+-moz-box-shadow: 0px 0px 5px 0px rgba(143,143,143,1);
+box-shadow: 0px 0px 5px 0px rgba(143,143,143,1);background:#fff;">
+            <thead>
+                <tr>
+                    <th colspan="4" class="text-center"><strong>Замовник: </strong>@item.FullName  @item.CompanyName</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><h4>Відправлення з: </h4>@item.From</td>
+                    <td><h4>Прибуття у: </h4>@item.To</td>
+                    <td><h4>Дистанція (км): </h4>@item.Distance</td>
+                    <td><h4>Тривальсть (г): </h4>@item.Duration</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong> Машина:</strong>@item.Title</td>
+                    <td><h4>Номер машини: </h4></td>
+                    <td><h4>Статус: </h4>@if (item.Status == false)
+                    {
+                        <span class="text-danger">В дорозі</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Прибув</span>
+                    }</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+}

@@ -1,6 +1,7 @@
 ﻿using AppTrucking.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,12 +13,60 @@ namespace AppTrucking.Controllers
         ApplicationDbContext context = new ApplicationDbContext();
         public ActionResult Index()
         {
-            return View();
+            List<OrderViewModels> orders;
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                orders = (from or in context.Orders
+                          join mp in context.MapDatas on or.OrderId equals mp.OrderId
+                          join us in context.Users on or.ApplicationUserId equals us.Id
+                          join cr in context.Cars on or.CarId equals cr.CarId
+                          join dr in context.Drivers on or.CarId equals dr.CarId
+                          select new OrderViewModels()
+                          {
+                              #region Feilds
+                              OrderId = or.OrderId,
+                              BodyVolume = cr.BodyVolume,
+                              CompanyName = us.CompanyName,
+                              Description = or.Description,
+                              Distance = mp.Distance,
+                              Duration = mp.Duration,
+                              E_mail = us.Email,
+                              From = mp.From,
+                              LiftingCapacity = cr.LiftingCapacity,
+                              Name = us.Name,
+                              OrderTime = or.OrderTime,
+                              Prce = cr.Prce,
+                              Skype = us.Skype,
+                              Status = or.Status,
+                              Surname = us.Surname,
+                              Telephone = us.Telephone,
+                              Title = cr.Title,
+                              To = mp.To,
+                              Tonnage = cr.Tonnage,
+                              Total = or.Total,
+                              Viber = us.Viber,
+                              UserId = us.Id,
+                              DriverName = dr.Name,
+                              DriverSurName = dr.Surname,
+                              DriverPhone = dr.Telephone,
+                              Services = or.Services.ToList()
+                              #endregion
+                          }).OrderByDescending(s=> s.OrderId).ToList();
+
+                return View(orders);
+            }
         }
 
         public ActionResult Order()
         {
-            ViewBag.CarId = new SelectList(context.Cars, "CarId", "Title");
+            var carList = context.Cars.Where(s => s.IsFree == true).ToList();
+            ViewBag.CarId = new SelectList(carList, "CarId", "Title");
+            var free = carList.Count();
+            if(free == 0)
+            {
+                ViewBag.Dis = free;
+                ViewBag.NotFree = "Нажаль, немає свободних машин!";
+            }
             ViewBag.ServiceList = context.Services.Distinct().ToList();
             return View();
         }
@@ -36,6 +85,7 @@ namespace AppTrucking.Controllers
             }
 
             var getCar = context.Cars.Where(s => s.CarId == order.CarId).FirstOrDefault();
+            
             var newOrder = new Order()
             {
                 ApplicationUserId = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity),
@@ -43,8 +93,16 @@ namespace AppTrucking.Controllers
                 Total = (getCar.Prce * Convert.ToDecimal(distance))+ serviceSum,
                 Description = order.Description,
                 OrderTime = DateTime.Now,
-                CarId = order.CarId
+                CarId = order.CarId,
+                Volume = order.Volume,
+                Weight = order.Weight
             };
+            getCar.IsFree = false;
+            context.Entry(getCar).State = EntityState.Modified;
+            if (order.Weight > getCar.Tonnage && order.Volume > getCar.BodyVolume)
+            {
+                throw new Exception("Вага перевищує тонаж машини!");
+            }
             if (selectedService != null)
             {
                 newOrder.Services = new List<Service>();
@@ -71,7 +129,12 @@ namespace AppTrucking.Controllers
             context.MapDatas.Add(newMapData);
             context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Result");
+        }
+
+        public ActionResult Result()
+        {
+            return View();
         }
 
         public ActionResult About()

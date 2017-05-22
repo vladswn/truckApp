@@ -6,7 +6,7 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "AddTypeTransport")
+    @Html.ActionLink("Додати", "AddTypeTransport")
 </p>
 <table class="table">
     <tr>
@@ -22,8 +22,8 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditTypeTransport", new { id=item.TypeOfTransportId }) |
-            @Html.ActionLink("Delete", "DeleteTypeTransport", new { id=item.TypeOfTransportId })
+            @Html.ActionLink("Редагувати", "EditTypeTransport", new { id=item.TypeOfTransportId }) |
+            @Html.ActionLink("Видалити", "DeleteTypeTransport", new { id=item.TypeOfTransportId })
         </td>
     </tr>
 }

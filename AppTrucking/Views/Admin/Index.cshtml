@@ -1,8 +1,124 @@
-﻿@{ 
-    ViewBag.Title = "Головна сторынка";
+﻿@model IEnumerable<AppTrucking.Models.OrderViewModels>
+
+@{ 
+    ViewBag.Title = "Головна сторінка";
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
 <div class="row">
-    some text
+    <h2 class="text-center">Усі замовлення!</h2>
+    <div class="table-responsive" style="height:500px;">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Статус</th>
+                    <th>Відпраленення заказа</th>
+                    <th>Замовник</th>
+                    <th>Компаній замовника</th>
+                    <th>Електронна адреса замовника</th>
+                    <th>Skype замовника</th>
+                    <th>Viber замовника</th>
+                    <th>Номер замовника</th>
+                    <th>Відправлення з</th>
+                    <th>Прибуття у</th>
+                    <th>Дистанція</th>
+                    <th>Тривальсть</th>
+                    <th>Час замовлення</th>
+                    <th>Додаткова інформація про груз</th>
+                    <th>Водій</th>
+                    <th>Номер водія</th>
+                    <th>Машина</th>
+                    <th>Номер машини</th>
+                    <th>Тонаж машини</th>
+                    <th>Об'єм грузу</th>
+                    <th>Вага грузу</th>
+                    <th>Додаткові послуги</th>
+                    <th>Підсумкова вартість</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.OrderId</td>
+                        <td>
+                            @if (item.Status == false)
+                            {
+                                <span class="text-danger">@Html.ActionLink("В дорозі", "EditStatus", "Admin", new { id = item.OrderId }, new { @class = "modal_item" })</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">@Html.ActionLink("Прибув", "EditStatus", "Admin", new { id = item.OrderId }, new { @class = "modal_item" })</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsSent == false)
+                            {
+                                <span class="text-danger">@Html.ActionLink("Не відправлен", "EditSent", "Admin", new { id = item.OrderId }, new { @class = "modal_item" })</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">@Html.ActionLink("Відправлен", "EditSent", "Admin", new { id = item.OrderId }, new { @class = "modal_item" })</span>
+                            }
+                        </td>
+                        <td>@item.FullName</td>
+                        <td>@item.CompanyName</td>
+                        <td>@item.E_mail</td>
+                        <td>@item.Telephone</td>
+                        <td>@item.Skype</td>
+                        <td>@item.Viber</td>
+                        <td>@item.From</td>
+                        <td>@item.To</td>
+                        <td>@item.Distance</td>
+                        <td>@item.Duration</td>
+                        <td>@item.OrderTime.ToShortDateString()</td>
+                        <td>@item.Description</td>
+                        <td>@item.DriverFullName</td>
+                        <td>@item.DriverPhone</td>
+                        <td>@item.Title</td>
+                        <td>@item.CarNumber</td>
+                        <td>@item.Tonnage</td>
+                        <td>@item.Volume</td>
+                        <td>@item.Weight</td>
+                        <td>
+                            <ul>
+                                @foreach(var i in item.Services)
+                                {
+                                    <li>@i.Title</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>@item.Total</td>
+                    </tr>
+                }
+                
+        </tbody>
+    </table>
 </div>
+
+  
+</div>
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".modal_item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

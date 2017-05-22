@@ -12,11 +12,12 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Admin</a></li>
+                    <li><a href="/Admin/Index">Admin</a></li>
                 </ul>
                
             </div>
             <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Вихід", "LogOff", "Account")</li>
                 <li><p class="navbar-text">@User.Identity.Name</p></li>
             </ul>
         </div>
@@ -26,11 +27,11 @@
         <div class="col-md-2 well" style="min-height:890px;">
             <div class="list-group">
                 @Html.ActionLink("Користувачи","UsersList","Admin", null,new { @class= "list-group-item" })
-                @Html.ActionLink("Drivers", "DriverList", "Admin", null, new { @class = "list-group-item" })
-                @Html.ActionLink("Type of transport", "TypeTransportList", "Admin", null, new { @class = "list-group-item" })
-                @Html.ActionLink("Car", "CarList", "Admin", null, new { @class = "list-group-item" })
-                @Html.ActionLink("Service List", "ServiceList", "Admin", null, new { @class = "list-group-item" })
-                @Html.ActionLink("Drivers", "DriverList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Водії", "DriverList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Тип транспорту", "TypeTransportList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Список машин", "CarList", "Admin", null, new { @class = "list-group-item" })
+                @Html.ActionLink("Послуги", "ServiceList", "Admin", null, new { @class = "list-group-item" })
+                @*@Html.ActionLink("Drivers", "DriverList", "Admin", null, new { @class = "list-group-item" })*@
             </div>
         </div>
         <div class="col-md-offset-1 col-md-9 well">

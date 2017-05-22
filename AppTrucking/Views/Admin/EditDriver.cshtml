@@ -1,4 +1,4 @@
-﻿@model AppTrucking.Models.Driver
+﻿ @model AppTrucking.Models.Driver
 
 @{
     ViewBag.Title = "Список користувачив";
@@ -11,8 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Driver</h4>
-        <hr />
+        <h4>Водій</h4>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.DriverId)
 
@@ -57,7 +56,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CarId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Car.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.DropDownListFor(model => model.CarId, ViewBag.CarId as SelectList, new { @class = "form-control" })*@
                 @Html.DropDownList("CarId", null, new { @class = "form-control" })
@@ -67,12 +66,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Зберігти" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("До списку водіїв", "DriverList")
 </div>

@@ -1,0 +1,49 @@
+﻿@model AppTrucking.Models.Order
+@{ 
+    Layout = null;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.OrderId)
+        @Html.HiddenFor(model => model.ApplicationUserId)
+        @Html.HiddenFor(model => model.CarId)
+        @Html.HiddenFor(model => model.Description)
+        @Html.HiddenFor(model => model.OrderTime)
+        @Html.HiddenFor(model => model.Total)
+        @Html.HiddenFor(model => model.Volume)
+        @Html.HiddenFor(model => model.Weight)
+        @Html.HiddenFor(model=> model.IsSent)    
+
+        <div class="modal-dialog" style="width:350px;">
+            <div class="modal-content">
+                <div class="modal-header alert alert-info">Змінити статус</div>
+                <div class="modal-body">
+                    <h4>Змінити статус замовлення</h4>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.Status, ViewBag.Status as SelectList, new { @class = "form-control" })
+                                @*@Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Змінити" class="btn btn-primary" role="button" />
+                    <button class="btn btn-danger" data-dismiss="modal" area-hidden="true">Відміна</button>
+                </div>
+            </div>
+        </div>
+}
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@

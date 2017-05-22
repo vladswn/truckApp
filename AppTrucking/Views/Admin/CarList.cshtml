@@ -5,57 +5,105 @@
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Create New", "AddCar")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LiftingCapacity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BodyVolume)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tonnage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Prce)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeOfTransportId)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LiftingCapacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BodyVolume)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tonnage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prce)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfTransport.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditCar", new { id=item.CarId }) |
-            @Html.ActionLink("Delete", "DeleteCar", new { id=item.CarId })
-        </td>
-    </tr>
+<div class="row">
+    <div class="col-md-6">@Html.ActionLink("Додати нову машину", "AddCar")</div>
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            <p>
+                Знайти машину: @Html.TextBox("searchCar")
+                <input type="submit" value="Пошук" />
+            </p>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LiftingCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BodyVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tonnage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfTransportId)
+            </th>
+            <th>Статус машини</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LiftingCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BodyVolume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tonnage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prce)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfTransport.Title)
+                </td>
+                <td>
+                    @if(item.IsFree == true)
+                    {
+                        <span>@Html.ActionLink("Вільна", "EditCarStatus", "Admin", new { id = item.CarId }, new { @class = "modal_item" })</span>
+                    }
+                    else
+                    {
+                        <span>@Html.ActionLink("Зайнята", "EditCarStatus", "Admin", new { id = item.CarId }, new { @class = "modal_item" })</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Редагувати", "EditCar", new { id = item.CarId }) |
+                    @Html.ActionLink("Видалити", "DeleteCar", new { id = item.CarId })
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+</div>
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".modal_item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
 }
-
-</table>

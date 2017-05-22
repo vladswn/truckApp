@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EditUserViewModel</h4>
+        <h4>Редагування користувача</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -72,7 +72,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Roles", new { @class = "control-label col-md-2" })
+            @Html.Label("Ролі", new { @class = "control-label col-md-2" })
             <span class="col-md-10">
                 @foreach (var item in Model.RolesList)
                 {
@@ -100,5 +100,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("До списку користувачив", "UserList")
 </div>

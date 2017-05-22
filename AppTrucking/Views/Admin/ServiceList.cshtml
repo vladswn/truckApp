@@ -7,7 +7,7 @@
 
 
 <p>
-    @Html.ActionLink("Create New", "AddService")
+    @Html.ActionLink("Додати послугу", "AddService")
 </p>
 <table class="table">
     <tr>
@@ -35,8 +35,8 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditService", new { id=item.ServiceId }) |
-            @Html.ActionLink("Delete", "DeleteService", new { id=item.ServiceId })
+            @Html.ActionLink("Редагувати", "EditService", new { id=item.ServiceId }) |
+            @Html.ActionLink("Видалити", "DeleteService", new { id=item.ServiceId })
         </td>
     </tr>
 }

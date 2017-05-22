@@ -1,13 +1,12 @@
 ﻿@model AppTrucking.Models.Driver
 
 @{
-    ViewBag.Title = "Список користувачив";
+    ViewBag.Title = "Видалити водія";
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Ви дійсно хочете видалити водія?</h3>
 <div>
-    <h4>Driver</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -51,11 +50,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CarId)
+            @Html.DisplayNameFor(model => model.Car.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CarId)
+            @Html.DisplayFor(model => model.Car.Title)
         </dd>
 
     </dl>
@@ -64,8 +63,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Видалити" class="btn btn-default" /> |
+            @Html.ActionLink("До списку водіїв", "DriverList")
         </div>
     }
 </div>

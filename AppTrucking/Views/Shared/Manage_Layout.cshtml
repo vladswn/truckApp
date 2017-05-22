@@ -27,7 +27,7 @@
     <nav class="navbar navbar-collapse bg-primary" data-spy="affix" data-offset-top="100">
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Головна сторінка", "Index", "Home")</li>
-            <li>@Html.ActionLink("Замовити перевезення", "Index", "Home")</li>
+            <li>@Html.ActionLink("Замовити перевезення", "Order", "Home")</li>
             <li>@Html.ActionLink("Додаткові послуги", "Index", "Home")</li>
             <li>@Html.ActionLink("Про нас", "Index", "Home")</li>
             <li>@Html.ActionLink("Контакти", "Index", "Home")</li>
@@ -36,6 +36,10 @@
         <ul class="nav navbar-nav navbar-right">
             @if (User.Identity.IsAuthenticated)
             {
+                if (User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Панель управління", "Index", "Admin")</li>
+                }
                 <li>@Html.ActionLink("Ви: " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                 <li>@Html.ActionLink("Вихід", "LogOff", "Account")</li>
             }
