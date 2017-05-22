@@ -48,9 +48,10 @@
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Головна сторінка", "Index", "Home")</li>
             <li>@Html.ActionLink("Замовити перевезення", "Order", "Home")</li>
+            <li>@Html.ActionLink("Список машин", "", "Home")</li>
             <li>@Html.ActionLink("Додаткові послуги", "Index", "Home")</li>
-            <li>@Html.ActionLink("Про нас", "Index", "Home")</li>
-            <li>@Html.ActionLink("Контакти", "Index", "Home")</li>
+            <li>@Html.ActionLink("Про нас", "About", "Home")</li>
+            <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -121,9 +122,10 @@
                         <ul>
                             <li><a href="#">&raquo; Головна сторінка</a></li>
                             <li><a href="/Home/Order">&raquo; Замовити перевезення</a></li>
+                            <li><a href="/Home/Order">&raquo; Список машин</a></li>
                             <li><a href="#">&raquo; Додаткові послуги</a></li>
-                            <li><a href="#">&raquo; Про нас</a></li>
-                            <li><a href="#">&raquo; Контакти</a></li>
+                            <li><a href="/Home/About">&raquo; Про нас</a></li>
+                            <li><a href="/Home/Contact">&raquo; Контакти</a></li>
                         </ul>
                     </div>
                 </div>

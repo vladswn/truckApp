@@ -9,22 +9,42 @@
 
 @using (Html.BeginForm("ReportDriver", "Admin", FormMethod.Get))
 {
-    <div>
-        З: @Html.TextBox("fromDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield", type = "date" })
-        До: @Html.TextBox("toDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield", type = "date" })
-        @Html.DropDownList("DriverId", ViewBag.DriverId as SelectList, new { @class = "form-control" })
+    <div class="row">
+        <h3>Zvit z zakaziv pomicyachno!</h3>
+        <br />
+        <div class="col-md-3">
+            З: @Html.TextBox("fromDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield form-control", type = "date" })
+        </div>
+        <div class="col-md-3">
+            До: @Html.TextBox("toDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield form-control", type = "date" })
+        </div>
+       
+        <div class="col-md-3">
+            Spivrobitnik
+            @Html.DropDownList("DriverId", ViewBag.DriverId as SelectList, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <br />
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+        
         @*@Html.DropDownList("DriverId", null, new { @class = "form-control" })*@
-        <input type="submit" value="Search" />
+       
     </div>
-
-    <div>
-        @*@Model.FullName
-        @Model.Total*@
+    <br />
+    <div class="row well">
         @if (Model != null)
         {
-            <span>Водій</span> @Model.FullName
-            <br />
-            <span>Усього</span> @Model.Sum
+            <div class="col-md-4">
+                <h4>Машина</h4> @Model.CarName
+            </div>
+            <div class="col-md-4">
+                <h4>Водій</h4> @Model.FullName
+            </div>
+            <div class="col-md-4">
+                <h4>Сумма заказыв(грн)</h4> @Model.Sum
+            </div> 
+            
         }
     </div>
 }

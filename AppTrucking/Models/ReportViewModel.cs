@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace AppTrucking.Models
 {
@@ -20,6 +16,5 @@ namespace AppTrucking.Models
         public string CarName { get; set; }
         public Decimal Sum { get; set; }
         public Decimal Total { get; set; } 
-        //public IEnumerable<Driver> Drivers { get; set; }
     }
 }

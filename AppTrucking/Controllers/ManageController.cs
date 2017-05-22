@@ -338,7 +338,7 @@ namespace AppTrucking.Controllers
                           where(getUserId == us.Id)
                           select new OrderViewModels()
                           {
-                              #region Feilds
+                                #region Feilds
                               OrderId = or.OrderId,
                               BodyVolume = cr.BodyVolume,
                               CompanyName = us.CompanyName,

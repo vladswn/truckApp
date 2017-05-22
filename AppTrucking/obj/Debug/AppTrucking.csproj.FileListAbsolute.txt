@@ -363,3 +363,6 @@ E:\truckApp\truckApp\AppTrucking\obj\Debug\AppTrucking.pdb
 E:\truckApp\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Order_Car.resources
 E:\truckApp\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Car.resources
 E:\truckApp\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Order1.resources
+D:\AppTrucking\AppTrucking\obj\Debug\AppTrucking.Migrations.Order_Car.resources
+D:\AppTrucking\AppTrucking\obj\Debug\AppTrucking.Migrations.Car.resources
+D:\AppTrucking\AppTrucking\obj\Debug\AppTrucking.Migrations.Order1.resources

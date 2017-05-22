@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AppTrucking.Models
 {
     public class OrderViewModels
     {
-        //public OrderViewModels()
-        //{
-        //    this.Order = new Order();
-        //    this.Services = new List<Service>();
-        //}
+
         public int OrderId { get; set; }
         public DateTime OrderTime { get; set; }
         public decimal Total { get; set; }
@@ -49,7 +43,6 @@ namespace AppTrucking.Models
         public string DriverFullName { get { return String.Format($"{DriverName} {DriverSurName}"); } }
         public string DriverPhone { get; set; }
 
-        public Order Order { get; set; }
         public List<Service> Services { get; set; }
     }
 }
