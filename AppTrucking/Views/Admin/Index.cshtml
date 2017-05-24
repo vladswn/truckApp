@@ -25,6 +25,7 @@
                     <th>Дистанція</th>
                     <th>Тривальсть</th>
                     <th>Час замовлення</th>
+                    <th>Дата завантаження</th>
                     <th>Додаткова інформація про груз</th>
                     <th>Водій</th>
                     <th>Номер водія</th>
@@ -74,6 +75,7 @@
                         <td>@item.Distance</td>
                         <td>@item.Duration</td>
                         <td>@item.OrderTime.ToShortDateString()</td>
+                        <td>@item.OrderDate.ToShortDateString()</td>
                         <td>@item.Description</td>
                         <td>@item.DriverFullName</td>
                         <td>@item.DriverPhone</td>

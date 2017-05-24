@@ -460,3 +460,4 @@ E:\4k\2semestr\Diplom\Shop\DB\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrati
 E:\4k\2semestr\Diplom\Shop\DB\truckApp\AppTrucking\obj\Debug\AppTrucking.csproj.GenerateResource.Cache
 E:\4k\2semestr\Diplom\Shop\DB\truckApp\AppTrucking\obj\Debug\AppTrucking.dll
 E:\4k\2semestr\Diplom\Shop\DB\truckApp\AppTrucking\obj\Debug\AppTrucking.pdb
+E:\4k\2semestr\Diplom\Shop\DB\truckApp\AppTrucking\obj\Debug\AppTrucking.Migrations.Order2.resources

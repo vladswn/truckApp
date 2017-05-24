@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppTrucking.Models
 {
@@ -14,6 +15,9 @@ namespace AppTrucking.Models
         public int Weight { get; set; }
         public int Volume { get; set; }
         public bool IsSent { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime OrderDate { get; set; }
 
         public string Title { get; set; }
         public string LiftingCapacity { get; set; }

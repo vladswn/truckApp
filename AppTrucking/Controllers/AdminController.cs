@@ -91,6 +91,7 @@ namespace AppTrucking.Controllers
                               Weight = or.Weight,
                               CarNumber = cr.Number,
                               IsSent = or.IsSent,
+                              OrderDate = or.OrderDate,
                               Services = or.Services.ToList()
                               #endregion
                           }).OrderByDescending(s=> s.OrderId).ToList();
@@ -361,11 +362,6 @@ namespace AppTrucking.Controllers
         [HttpGet]
         public ActionResult ReportDriver(DateTime? fromDate, DateTime? toDate, int? DriverId)
         {
-            //var lst = new ReportViewModel()
-            //{
-            //    Drivers = new SelectList(context.Drivers,)
-            //}
-            //ViewBag.DriverId =  new SelectList(context.Drivers, "DriverId", "Name"+" "+"Surname");
             var list = context.Drivers.ToList();
             List<SelectListItem> listData = new List<SelectListItem>();
             listData.Add(new SelectListItem
@@ -385,13 +381,30 @@ namespace AppTrucking.Controllers
             ViewBag.DriverId = listData;
             if(fromDate != null && toDate != null && DriverId != null)
             {
-                Decimal ord = (from s in context.Orders
+
+                Decimal? ord = 0; 
+
+                try
+                {
+
+                    ord = (from s in context.Orders
                            join cr in context.Cars on s.CarId equals cr.CarId
                            join dr in context.Drivers on cr.CarId equals dr.CarId
                            where dr.DriverId == DriverId
                            && s.OrderTime >= fromDate && s.OrderTime < toDate
                            select s).Sum(s => s.Total);
+                }
+                catch(Exception ex)
+                {
+                    ViewBag.ErrorMes = "Нажаль за цей період не було заказів у данного водія!";
+                }
+                
 
+
+                if (ord == null)
+                {
+                    ord = 0;
+                }
 
                 ReportViewModel report;
                 report = (from s in context.Orders

@@ -451,6 +451,7 @@ namespace AppTrucking.Controllers
                               Volume = or.Volume,
                               Weight = or.Weight,
                               CarNumber = cr.Number,
+                              OrderDate = or.OrderDate,
                               Services = or.Services.ToList()
                               #endregion
                           }).Where(s=> s.Status == true).ToList();
@@ -505,6 +506,7 @@ namespace AppTrucking.Controllers
                               Volume = or.Volume,
                               Weight = or.Weight,
                               CarNumber = cr.Number,
+                              OrderDate = or.OrderDate,
                               Services = or.Services.ToList()
                               #endregion
                           }).Where(s => s.Status == false).ToList();

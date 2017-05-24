@@ -49,6 +49,7 @@ namespace AppTrucking.Controllers
                               DriverName = dr.Name,
                               DriverSurName = dr.Surname,
                               DriverPhone = dr.Telephone,
+                              OrderDate = or.OrderDate,
                               Services = or.Services.ToList()
                               #endregion
                           }).OrderByDescending(s=> s.OrderId).ToList();
@@ -95,7 +96,8 @@ namespace AppTrucking.Controllers
                 OrderTime = DateTime.Now,
                 CarId = order.CarId,
                 Volume = order.Volume,
-                Weight = order.Weight
+                Weight = order.Weight,
+                OrderDate = order.OrderDate
             };
             getCar.IsFree = false;
             context.Entry(getCar).State = EntityState.Modified;

@@ -14,7 +14,7 @@ namespace AppTrucking.Models
             }
         }
         public string CarName { get; set; }
-        public Decimal Sum { get; set; }
+        public Decimal? Sum { get; set; }
         public Decimal Total { get; set; } 
     }
 }

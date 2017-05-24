@@ -10,6 +10,9 @@ namespace AppTrucking.Models
     {
         public int OrderId { get; set; }
         public DateTime OrderTime { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime OrderDate { get; set; }
         //public int CityId { get; set; }
         //public int ArrivalCityId { get; set; }
         public int CarId { get; set; }
