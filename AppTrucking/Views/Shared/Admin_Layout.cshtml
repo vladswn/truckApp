@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title- Admin </title>
+    <title>@ViewBag.Title - Панель управління </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -12,7 +12,8 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <ul class="nav navbar-nav">
-                    <li><a href="/Admin/Index">Admin</a></li>
+                    <li><a href="/Admin/Index">Панель управління</a></li>
+                    <li><a href="/Home/Index">На сайт</a></li>
                 </ul>
                
             </div>
@@ -26,7 +27,7 @@
     <div class="row" style="margin-top:70px;margin-right:70px;margin-left:10px;">
         <div class="col-md-2 well" style="min-height:890px;">
             <div class="list-group">
-                @Html.ActionLink("Користувачи","UsersList","Admin", null,new { @class= "list-group-item" })
+                @Html.ActionLink("Користувачі","UsersList","Admin", null,new { @class= "list-group-item" })
                 @Html.ActionLink("Водії", "DriverList", "Admin", null, new { @class = "list-group-item" })
                 @Html.ActionLink("Тип транспорту", "TypeTransportList", "Admin", null, new { @class = "list-group-item" })
                 @Html.ActionLink("Список машин", "CarList", "Admin", null, new { @class = "list-group-item" })

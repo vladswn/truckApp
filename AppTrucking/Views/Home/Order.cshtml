@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Побудувати шлях:", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.Label("Побудувати маршрут:", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         <input type="button" value="Побудувати шлях" onclick="GetRoute()" class="btn btn-default" />
                     </div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Тривальсть (ч) :", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.Label("Тривальсть (г) :", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         <input type="text" name="time" id="time" value="0" readonly class="form-control"><br>
                     </div>
@@ -52,14 +52,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Вага", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.Label("Вага (кг)", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Об'єм", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.Label("Об'єм", htmlAttributes: new { @class = "control-label col-md-4" })<strong>м<sup><small>3</small></sup></strong> 
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Volume, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Volume, "", new { @class = "text-danger" })

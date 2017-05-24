@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace AppTrucking.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         public AdminController() { }
@@ -369,7 +370,7 @@ namespace AppTrucking.Controllers
             List<SelectListItem> listData = new List<SelectListItem>();
             listData.Add(new SelectListItem
             {
-                Text = "Please select",
+                Text = " ",
                 Value = "",
             });
 
@@ -384,18 +385,6 @@ namespace AppTrucking.Controllers
             ViewBag.DriverId = listData;
             if(fromDate != null && toDate != null && DriverId != null)
             {
-                //var ord = (from s in context.Orders
-                //           join cr in context.Cars on s.CarId equals cr.CarId
-                //           join dr in context.Drivers on cr.CarId equals dr.CarId
-                //           where dr.DriverId == DriverId
-                //           && s.OrderTime >= fromDate && s.OrderTime < toDate
-                //           select new ReportViewModel()
-                //           {
-                //               CarName = cr.Title,
-                //               Name = dr.Name,
-                //               Surname = dr.Surname,
-                //               Total = s.Total
-                //           }).ToList();
                 Decimal ord = (from s in context.Orders
                            join cr in context.Cars on s.CarId equals cr.CarId
                            join dr in context.Drivers on cr.CarId equals dr.CarId
@@ -404,13 +393,6 @@ namespace AppTrucking.Controllers
                            select s).Sum(s => s.Total);
 
 
-                //ReportViewModel report = new ReportViewModel();
-                //report = new ReportViewModel()
-                //{
-                //    CarName = ord.FirstOrDefault().CarName,
-                //    Name = ord.FirstOrDefault().Name,
-                //    Surname = ord.FirstOrDefault().Surname,
-                //};
                 ReportViewModel report;
                 report = (from s in context.Orders
                           join cr in context.Cars on s.CarId equals cr.CarId
@@ -423,11 +405,6 @@ namespace AppTrucking.Controllers
                               Sum = ord
                           }).FirstOrDefault();
 
-                //if (!from.HasValue) from = DateTime.Now.Date;
-                //if (!to.HasValue) to = from.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
-                //if (to < from) to = from.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
-                //ViewBag.fromDate = from;
-                //ViewBag.toDate = to;
 
                 return View(report);
             }

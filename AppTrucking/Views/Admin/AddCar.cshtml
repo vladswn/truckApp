@@ -1,7 +1,7 @@
 ﻿@model AppTrucking.Models.Car
 
 @{
-    ViewBag.Title = "Список користувачив";
+    ViewBag.Title = "Додати нову машину";
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
 }
 
@@ -10,7 +10,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Car</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -50,6 +49,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Prce, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Prce, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Номер машини", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
             </div>
         </div>
 

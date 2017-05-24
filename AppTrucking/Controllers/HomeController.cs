@@ -56,7 +56,7 @@ namespace AppTrucking.Controllers
                 return View(orders);
             }
         }
-
+        [Authorize(Roles = "User")]
         public ActionResult Order()
         {
             var carList = context.Cars.Where(s => s.IsFree == true).ToList();
@@ -65,7 +65,7 @@ namespace AppTrucking.Controllers
             if(free == 0)
             {
                 ViewBag.Dis = free;
-                ViewBag.NotFree = "Нажаль, немає свободних машин!";
+                ViewBag.NotFree = "Нажаль, немає вільних машин!";
             }
             ViewBag.ServiceList = context.Services.Distinct().ToList();
             return View();
@@ -152,5 +152,11 @@ namespace AppTrucking.Controllers
             var list = context.Cars.ToList();
             return View(list);
         }
+        public ActionResult Services()
+        {
+            var list = context.Services.ToList();
+            return View(list);
+        }
+
     }
 }

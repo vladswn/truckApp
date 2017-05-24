@@ -1,16 +1,14 @@
-﻿@*@model AppTrucking.Models.Driver*@
-@model AppTrucking.Models.ReportViewModel
+﻿@model AppTrucking.Models.ReportViewModel
 @{ 
+    ViewBag.Title = "Звіт";
     Layout = "~/Views/Shared/Admin_Layout.cshtml";
-    //var from = (DateTime)ViewBag.fromDate;
-    //var to = (DateTime)ViewBag.toDate;
 }
 
 
 @using (Html.BeginForm("ReportDriver", "Admin", FormMethod.Get))
 {
     <div class="row">
-        <h3>Zvit z zakaziv pomicyachno!</h3>
+        <h3>Звіт за певний період</h3>
         <br />
         <div class="col-md-3">
             З: @Html.TextBox("fromDate", string.Format("{0:dd MMM yyy}", DateTime.Now), new { @class = "datefield form-control", type = "date" })
@@ -20,15 +18,13 @@
         </div>
        
         <div class="col-md-3">
-            Spivrobitnik
+            Водії
             @Html.DropDownList("DriverId", ViewBag.DriverId as SelectList, new { @class = "form-control" })
         </div>
         <div class="col-md-3">
             <br />
             <input type="submit" value="Search" class="btn btn-default" />
         </div>
-        
-        @*@Html.DropDownList("DriverId", null, new { @class = "form-control" })*@
        
     </div>
     <br />

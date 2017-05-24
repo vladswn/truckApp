@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AppTrucking.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace AppTrucking.Controllers
 {
@@ -53,28 +54,111 @@ namespace AppTrucking.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(/*ManageMessageId? message*/)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+            //ViewBag.StatusMessage =
+            //    message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+            //    : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+            //    : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+            //    : message == ManageMessageId.Error ? "An error has occurred."
+            //    : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+            //    : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+            //    : "";
 
-            var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            //var userId = User.Identity.GetUserId();
+            //var model = new IndexViewModel
+            //{
+            //    HasPassword = HasPassword(),
+            //    PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+            //    TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+            //    Logins = await UserManager.GetLoginsAsync(userId),
+            //    BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+            //};
+            //return View(model);
+            var getUserId = IdentityExtensions.GetUserId(User.Identity);
+            ApplicationDbContext context = new ApplicationDbContext();
+            //var get = context.Users.Where(s => s.Id == getUserId).FirstOrDefault();
+            //return View(get);
+            var user = await UserManager.FindByIdAsync(getUserId);
+            if (user == null)
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                return HttpNotFound();
+            }
+
+            var userRoles = await UserManager.GetRolesAsync(user.Id);
+
+            EditUserViewModel nd = new EditUserViewModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                CompanyName = user.CompanyName,
+                Skype = user.Skype,
+                Surname = user.Surname,
+                Telephone = user.Telephone,
+                Viber = user.Viber
             };
-            return View(model);
+
+            return View(nd);
         }
+        [HttpPost]
+        public ActionResult Index(EditUserViewModel editUser)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                //var user = await UserManager.FindByIdAsync(editUser.Id);
+                var user = db.Users.Find(editUser.Id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                user.Email = editUser.Email;
+                user.Name = editUser.Name;
+                user.Surname = editUser.Surname;
+                user.CompanyName = editUser.CompanyName;
+                user.Skype = editUser.Skype;
+                user.Telephone = editUser.Telephone;
+                user.Viber = editUser.Viber;
+
+                //db.Users.Attach(user);
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Something failed.");
+            return View();
+        }
+        //[HttpPost]
+        //public ActionResult Index(EditUserViewModel editUser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = UserManager.FindByIdAsync(editUser.Id);
+        //        if (user == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+
+        //        user. .UserName = editUser.Use;
+        //        user.Email = editUser.Email;
+        //        user.Name = editUser.Name;
+        //        user.Surname = editUser.Surname;
+        //        user.Email = editUser.Email;
+        //        user.CompanyName = editUser.CompanyName;
+        //        user.Skype = editUser.Skype;
+        //        user.Telephone = editUser.Telephone;
+        //        user.Viber = editUser.Viber;
+
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    ModelState.AddModelError("", "Something failed.");
+        //    return View();
+        //}
 
         //
         // POST: /Manage/RemoveLogin
@@ -369,7 +453,61 @@ namespace AppTrucking.Controllers
                               CarNumber = cr.Number,
                               Services = or.Services.ToList()
                               #endregion
-                          }).ToList();
+                          }).Where(s=> s.Status == true).ToList();
+
+                return View(orders);
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult PastOrder()
+        {
+            var getUserId = IdentityExtensions.GetUserId(User.Identity);
+            List<OrderViewModels> orders;
+            using (ApplicationDbContext context = new ApplicationDbContext())
+            {
+                orders = (from or in context.Orders
+                          join mp in context.MapDatas on or.OrderId equals mp.OrderId
+                          join us in context.Users on or.ApplicationUserId equals us.Id
+                          join cr in context.Cars on or.CarId equals cr.CarId
+                          join dr in context.Drivers on or.CarId equals dr.CarId
+                          //where (us.Id == Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity))
+                          where (getUserId == us.Id)
+                          select new OrderViewModels()
+                          {
+                              #region Feilds
+                              OrderId = or.OrderId,
+                              BodyVolume = cr.BodyVolume,
+                              CompanyName = us.CompanyName,
+                              Description = or.Description,
+                              Distance = mp.Distance,
+                              Duration = mp.Duration,
+                              E_mail = us.Email,
+                              From = mp.From,
+                              LiftingCapacity = cr.LiftingCapacity,
+                              Name = us.Name,
+                              OrderTime = or.OrderTime,
+                              Prce = cr.Prce,
+                              Skype = us.Skype,
+                              Status = or.Status,
+                              Surname = us.Surname,
+                              Telephone = us.Telephone,
+                              Title = cr.Title,
+                              To = mp.To,
+                              Tonnage = cr.Tonnage,
+                              Total = or.Total,
+                              Viber = us.Viber,
+                              UserId = us.Id,
+                              DriverName = dr.Name,
+                              DriverSurName = dr.Surname,
+                              DriverPhone = dr.Telephone,
+                              Volume = or.Volume,
+                              Weight = or.Weight,
+                              CarNumber = cr.Number,
+                              Services = or.Services.ToList()
+                              #endregion
+                          }).Where(s => s.Status == false).ToList();
 
                 return View(orders);
             }

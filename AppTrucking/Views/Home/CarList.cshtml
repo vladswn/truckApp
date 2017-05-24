@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<AppTrucking.Models.Car>
 
+@{ 
+    ViewBag.Title = "Список машин";
+}
+
 <br />
 <br />
 <div class="row">
@@ -27,10 +31,10 @@
                         @Html.DisplayNameFor(model => model.TypeOfTransport.Title)
                     </th>
                     <th>
-                        @Html.DisplayName("Выльна/ны")
+                        @Html.DisplayName("Статус")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Number)
+                        @Html.DisplayName("Номер машини")
                     </th>
                     <th></th>
                 </tr>
@@ -57,7 +61,14 @@
                             @Html.DisplayFor(modelItem => item.TypeOfTransport.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsFree)
+                            @if (item.IsFree == true)
+                            {
+                                <span>Вільна</span>
+                            }
+                            else
+                            {
+                                <span>Зайнята</span>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Number)
